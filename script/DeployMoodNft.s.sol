@@ -28,12 +28,12 @@ contract DeployMoodNft is Script {
     }
 
     // You could also just upload the raw SVG and have solildity convert it!
-    function svgToImageURI(string memory) public pure returns (string memory svg) {
+    function svgToImageURI(string memory _svg) public pure returns (string memory) {
         // example: "data:image/svg+xml;base64,PHN2ZyB4bWxu..."
         // <svg width'"1024px" height="1024px"
         // data:image/svg+xml;base64,PHN2ZyB4bWxu...
         string memory baseURL = "data:image/svg+xml;base64,";
-        string memory svgBase64Encoded = Base64.encode(bytes(string(abi.encodePacked(svg))));
+        string memory svgBase64Encoded = Base64.encode(bytes(string(abi.encodePacked(_svg))));
         return string(abi.encodePacked(baseURL, svgBase64Encoded));
     }
 }
