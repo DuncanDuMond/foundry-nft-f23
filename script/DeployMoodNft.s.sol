@@ -21,19 +21,21 @@ contract DeployMoodNft is Script {
         string memory happySvg = vm.readFile("./images/dynamicNft/happy.svg");
 
         vm.startBroadcast(deployerKey);
-        MoodNft moodNft = new MoodNft(svgToImageURI(sadSvg),
-            svgToImageURI(happySvg));
+        MoodNft moodNft = new MoodNft(
+            svgToImageURI(sadSvg),
+            svgToImageURI(happySvg)
+        );
         vm.stopBroadcast();
         return moodNft;
     }
 
     // You could also just upload the raw SVG and have solildity convert it!
-    function svgToImageURI(string memory _svg) public pure returns (string memory) {
-        // example: "data:image/svg+xml;base64,PHN2ZyB4bWxu..."
-        // <svg width'"1024px" height="1024px"
-        // data:image/svg+xml;base64,PHN2ZyB4bWxu...
+    function svgToImageURI(string memory svg) public pure returns (string memory) {
+        // example:
+        // '<svg width="500" height="500" viewBox="0 0 285 350" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="black" d="M150,0,L75,200,L225,200,Z"></path></svg>'
+        // would return ""
         string memory baseURL = "data:image/svg+xml;base64,";
-        string memory svgBase64Encoded = Base64.encode(bytes(string(abi.encodePacked(_svg))));
+        string memory svgBase64Encoded = Base64.encode(bytes(string(abi.encodePacked(svg))));
         return string(abi.encodePacked(baseURL, svgBase64Encoded));
     }
 }
